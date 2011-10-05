@@ -3,4 +3,6 @@
 *.class
 *.csv
 *.exe
+*.6
 /hellotest
+/go-hellotest
