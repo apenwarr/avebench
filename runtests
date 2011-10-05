@@ -5,16 +5,30 @@ import time
 
 START_DELAY=1.0
 
+def grab(argv):
+  p = subprocess.Popen(argv, stdout=subprocess.PIPE)
+  out = p.stdout.read()
+  p.wait()
+  return out
+
 def main():
   start = time.time()
-  p = subprocess.Popen(sys.argv[1:])
+  sys.stderr.write('running: %r\n' % sys.argv[1:])
+  p = subprocess.Popen(sys.argv[1:], stdout=2)
   rv = None
+  amounts = []
   while rv is None:
-    subprocess.call(['ps', '--no-headers', '-o', 'rss', str(p.pid)])
+    out = grab(['ps', '--no-headers', '-o', 'rss', str(p.pid)])
+    amount = str(int(out))
+    if amount != '0':
+      amounts.append(amount)
+      sys.stderr.write(' %s kb\n' % amount)
     time.sleep(0.1)
     rv = p.poll()
   end = time.time()
-  print 'time: %.1fs' % (end-start-START_DELAY)
+  elapsed = '%.1f' % (end-start-START_DELAY)
+  sys.stderr.write('elapsed: %s\n' % elapsed)
+  print ','.join([' '.join(sys.argv[1:]), elapsed, ''] + amounts)
   return rv
 
 rv = main()
