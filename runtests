@@ -1,0 +1,22 @@
+#!/usr/bin/python
+import subprocess
+import sys
+import time
+
+START_DELAY=1.0
+
+def main():
+  start = time.time()
+  p = subprocess.Popen(sys.argv[1:])
+  rv = None
+  while rv is None:
+    subprocess.call(['ps', '--no-headers', '-o', 'rss', str(p.pid)])
+    time.sleep(0.1)
+    rv = p.poll()
+  end = time.time()
+  print 'time: %.1fs' % (end-start-START_DELAY)
+  return rv
+
+rv = main()
+sys.stderr.write('exit code: %d\n' % rv)
+sys.exit(rv)
