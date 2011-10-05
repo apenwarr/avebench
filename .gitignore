@@ -3,3 +3,5 @@
 *.class
 *.csv
 *.exe
+/memtest
+/memtest2
