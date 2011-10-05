@@ -16,6 +16,8 @@ test.csv: compile
 	#./runtests java -client MemTest2 >>$@.new
 	#./runtests mono MemTest.exe >>$@.new
 	#./runtests mono MemTest2.exe >>$@.new
+	./runtests perl memtest.pl >>$@.new
+	./runtests perl memtest2.pl >>$@.new
 	mv $@.new $@
 
 clean:
