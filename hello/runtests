@@ -1,0 +1,26 @@
+#!/usr/bin/python
+import os
+import subprocess
+import sys
+import time
+
+HOW_MANY = 20
+
+def main():
+  start = time.time()
+  sys.stderr.write('running: %r\n' % sys.argv[1:])
+  for i in xrange(HOW_MANY):
+    p = subprocess.Popen(sys.argv[1:], stdout=os.dup(2))
+    rv = p.wait()
+    if rv:
+      return rv
+  end = time.time()
+  elapsed = round(end - start, 2)
+  persec = round(HOW_MANY*1.0/elapsed, 1)
+  sys.stderr.write('elapsed: %.2f\n' % elapsed)
+  print '%s,%.2f,%.1f' % (' '.join(sys.argv[1:]), elapsed, persec)
+  return 0
+
+rv = main()
+sys.stderr.write('exit code: %d\n' % rv)
+sys.exit(rv)
