@@ -3,5 +3,8 @@
 *.class
 *.csv
 *.exe
+*.6
 /memtest
 /memtest2
+/go-memtest
+/go-memtest2
