@@ -19,7 +19,7 @@ def main():
   rv = None
   amounts = []
   while rv is None:
-    out = grab(['ps', '--no-headers', '-o', 'rss', str(p.pid)])
+    out = grab(['ps', '-o', 'rss=', str(p.pid)])
     amount = int(out)
     if amount != '0':
       amounts.append(amount)
