@@ -1,8 +1,11 @@
 package main
 
-import fmt "fmt"
+import "os"
 
 func main() {
-  // FIXME actually read the file here
-  fmt.Printf("hello world\n")
+  f, _ := os.Open("hello.txt", os.O_RDONLY, 0)
+  var buf [102400]byte
+  len, _ := f.Read(buf[:])
+  os.Stdout.Write(buf[:len])
+  f.Close()
 }
