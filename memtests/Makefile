@@ -41,6 +41,9 @@ test.csv: compile
 	./runtests ./memtest2 >>$@.new
 	./runtests ./go-memtest2 >>$@.new
 	
+	echo >>$@.new
+	./runtests python ./memtest3.py >>$@.new
+	
 	mv $@.new $@
 
 clean:
